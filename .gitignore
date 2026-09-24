@@ -1,0 +1,10 @@
+.vercel
+.claude
+.playwright-mcp
+node_modules
+.DS_Store
+*.bak
+
+# working screenshots, not part of the site
+IMG_*.PNG
+Screenshot*.png

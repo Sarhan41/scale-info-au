@@ -1,0 +1,8 @@
+.git
+.claude
+.playwright-mcp
+.vercel
+node_modules
+*.bak
+IMG_*.PNG
+Screenshot*.png
