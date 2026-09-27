@@ -23,6 +23,9 @@ Workflow: branch, commit, open a PR, merge. Vercel deploys from `main`.
 | `/book-5k` | `book-5k.html` | 70/30 closer split, fires `Book5kVariant` pixel event |
 | `/confirm` | `confirm.html` | Post-booking confirmation |
 | `/disqualified` | `disqualified.html` | Disqualified applicants |
+| `/coaches` | `coaches.html` | Coaches landing page, copy of `variation-a` with a coaches label pill |
+| `/coaches-book` | `coaches-book.html` | Coaches booking, coaches AURR Calendly |
+| `/coaches-confirm` | `coaches-confirm.html` | Coaches post-booking confirmation |
 | `/variation-a`, `/variation-b` | A/B variants of the root |
 
 All pages carry the Meta pixel and the Whop pixel (`biz_RUNwpNN7ysF3hl`). `variation-b`
