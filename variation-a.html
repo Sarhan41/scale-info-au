@@ -37,6 +37,8 @@ src="https://www.facebook.com/tr?id=7351089301802071&ev=PageView&noscript=1"/></
 <!-- Whop Pixel Code -->
 <script>!function(w,d,s,u,n,a,b){if(w[n])return;a=w[n]={q:[],t:+new Date,s:[],o:u,track:function(){a.q.push([+new Date].concat([].slice.call(arguments)))},setScope:function(){a.s=[].slice.call(arguments).filter(function(x){return typeof x==="string"});a.q.push([+new Date,"setScope"].concat(a.s))},scope:function(){var c=[].slice.call(arguments);return{track:function(){a.q.push([+new Date].concat([].slice.call(arguments)).concat([{__scope:c}]))}}}};b=d.createElement(s);b.async=1;b.src=u+"/s.js";d.getElementsByTagName(s)[0].parentNode.insertBefore(b,d.getElementsByTagName(s)[0])}(window,document,"script","https://t.whop.tw","whop");whop.setScope("biz_RUNwpNN7ysF3hl");whop.track("page");
 (function(){try{
+  var u=new URL(window.location.href);
+  ['utm_source','utm_medium','utm_campaign','utm_content','utm_term','wclid'].forEach(function(k){var v=u.searchParams.get(k);if(v)try{sessionStorage.setItem('_wa_'+k,v);}catch(e){}});
   var _whopLeadFired=false;
   window.addEventListener('message',function(e){
     try{
@@ -45,10 +47,18 @@ src="https://www.facebook.com/tr?id=7351089301802071&ev=PageView&noscript=1"/></
       if(d&&(d.type==='form-submit'||d.type==='form-completed'||d.eventName==='form-submit')){
         _whopLeadFired=true;
         whop.track('lead');
+        // Build redirect to /book with UTMs preserved
+        var qs='';
+        ['utm_source','utm_medium','utm_campaign','utm_content','utm_term','wclid'].forEach(function(k){
+          var v=(function(){try{return sessionStorage.getItem('_wa_'+k)||'';}catch(ex){return '';}}());
+          if(v)qs+=(qs?'&':'')+k+'='+encodeURIComponent(v);
+        });
+        setTimeout(function(){window.location.href='/book'+(qs?'?'+qs:'');},2500);
       }
     }catch(err){}
   });
-}catch(err){}})();</script>
+}catch(err){}})();
+</script>
 <!-- End Whop Pixel Code -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -196,6 +206,12 @@ footer p{max-width:600px;margin:0 auto;font-size:11px;color:#444;line-height:1.7
   .cta-btn{width:100%;justify-content:center;padding:17px 24px}
   .form-card{padding:18px 12px}
   .vsl-outer{margin-bottom:24px}
+  /* extra bottom clearance so Cortana widget never covers Typeform submit */
+  .form-section{padding-bottom:120px!important}
+}
+/* Cortana chat widget — keep above bottom-anchored UI elements on mobile */
+@media(max-width:768px){
+  iframe[src*="usecortana"],iframe[src*="cortana"],[id*="cortana"],[class*="cortana"]{bottom:72px!important}
 }
 </style>
 <script async src="https://app.usecortana.ai/api/hub/v1/cmrgzf02f0002hu0a1iny2lag"></script>

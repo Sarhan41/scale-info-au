@@ -207,6 +207,11 @@ body {
   .calendar-embed-wrap iframe { height: 580px !important; }
   .micro-trust { gap: 12px; }
   .footer { padding: 20px 16px; }
+  /* extra clearance so Cortana widget never covers Calendly action buttons */
+  .calendar-section { padding-bottom: 100px !important; }
+}
+@media(max-width:768px){
+  iframe[src*="usecortana"],iframe[src*="cortana"],[id*="cortana"],[class*="cortana"]{bottom:72px!important}
 }
 </style>
 <script async src="https://app.usecortana.ai/api/hub/v1/cmrgzf02f0002hu0a1iny2lag"></script>
@@ -263,8 +268,13 @@ body {
           if(phone)lines.push('Phone: '+phone);
           if(ig)lines.push('Instagram: '+ig);
           if(lines.length)prefill.customAnswers={a1:lines.join('\n')};
+          var utmStr='';
+          ['utm_source','utm_medium','utm_campaign','utm_content','utm_term'].forEach(function(k){
+            var v=qp(k)||(function(){try{return sessionStorage.getItem('_wa_'+k)||'';}catch(e){return '';}}());
+            if(v)utmStr+='&'+k+'='+encodeURIComponent(v);
+          });
           window.Calendly.initInlineWidget({
-            url:'https://calendly.com/d/ds7f-35w-tz9/gameplan-call-w-scaleinfo-aurr?hide_event_type_details=1&hide_gdpr_banner=1&background_color=ffffff&text_color=1a1a1a&primary_color=0069ff',
+            url:'https://calendly.com/d/ds7f-35w-tz9/gameplan-call-w-scaleinfo-aurr?hide_event_type_details=1&hide_gdpr_banner=1&background_color=ffffff&text_color=1a1a1a&primary_color=0069ff'+utmStr,
             parentElement:document.getElementById('calendly-embed'),
             prefill:prefill
           });

@@ -263,8 +263,13 @@ body {
           if(phone)lines.push('Phone: '+phone);
           if(ig)lines.push('Instagram: '+ig);
           if(lines.length)prefill.customAnswers={a1:lines.join('\n')};
+          var utmStr='';
+          ['utm_source','utm_medium','utm_campaign','utm_content','utm_term'].forEach(function(k){
+            var v=qp(k)||(function(){try{return sessionStorage.getItem('_wa_'+k)||'';}catch(e){return '';}}());
+            if(v)utmStr+='&'+k+'='+encodeURIComponent(v);
+          });
           window.Calendly.initInlineWidget({
-            url:'https://calendly.com/d/d3pb-tpy-xkh/gameplan-call-w-scaleinfo-aurr-coaches?hide_event_type_details=1&hide_gdpr_banner=1&background_color=ffffff&text_color=1a1a1a&primary_color=0069ff',
+            url:'https://calendly.com/d/d3pb-tpy-xkh/gameplan-call-w-scaleinfo-aurr-coaches?hide_event_type_details=1&hide_gdpr_banner=1&background_color=ffffff&text_color=1a1a1a&primary_color=0069ff'+utmStr,
             parentElement:document.getElementById('calendly-embed'),
             prefill:prefill
           });
