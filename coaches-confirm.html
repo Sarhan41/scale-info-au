@@ -20,7 +20,7 @@ fbq('init', '27661902596830393');
 fbq('init', '7351089301802071');
 fbq('init', '1086131257508450');
 fbq('track', 'PageView');
-fbq('track', 'Schedule');
+(function(){try{if(sessionStorage.getItem('si_schedule_sent'))return;sessionStorage.setItem('si_schedule_sent','1');}catch(x){}fbq('track','Schedule');})();
 (function(){try{var m=document.cookie.match(/(?:^|;\s*)ab_variant=(a|b)/i);var v=m?m[1].toUpperCase():'unknown';fbq('trackCustom','BookingConfirmedByVariant',{variant:v});}catch(e){}})();
 </script>
 <!-- Vercel Analytics -->

@@ -331,5 +331,14 @@ body {
   revealEls.forEach(el => observer.observe(el));
 </script>
 
+<script>
+window.addEventListener('message',function(e){
+  if(e.origin!=='https://calendly.com')return;
+  if(!e.data||e.data.event!=='calendly.event_scheduled')return;
+  try{if(sessionStorage.getItem('si_schedule_sent'))return;}catch(x){}
+  if(typeof fbq==='function')fbq('track','Schedule');
+  try{sessionStorage.setItem('si_schedule_sent','1');}catch(x){}
+});
+</script>
 </body>
 </html>
