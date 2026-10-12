@@ -19,8 +19,8 @@ fbq('init', '27661902596830393');
 fbq('init', '7351089301802071');
 fbq('init', '1086131257508450');
 fbq('track', 'PageView');
-fbq('track', 'Lead');
-(function(){try{var m=document.cookie.match(/(?:^|;\s*)ab_variant=(a|b)/i);var v=m?m[1].toUpperCase():'unknown';fbq('trackCustom','LeadByVariant',{variant:v});}catch(e){}})();
+// Lead once per visitor per 30 days: a refresh or a second visit to the booking page is not a new lead.
+(function(){var k='si_lead_sent',t=0;try{t=+localStorage.getItem(k)||0;}catch(e){}if(t&&Date.now()-t<2592e6)return;try{localStorage.setItem(k,String(Date.now()));}catch(e){}fbq('track','Lead');try{var m=document.cookie.match(/(?:^|;\s*)ab_variant=(a|b)/i);var v=m?m[1].toUpperCase():'unknown';fbq('trackCustom','LeadByVariant',{variant:v});}catch(e){}})();
 </script>
 <!-- Vercel Analytics -->
 <script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments)};</script>
