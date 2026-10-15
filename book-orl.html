@@ -322,13 +322,32 @@ body {
 </script>
 
 <script>
-window.addEventListener('message',function(e){
-  if(e.origin!=='https://calendly.com')return;
-  if(!e.data||e.data.event!=='calendly.event_scheduled')return;
-  try{if(sessionStorage.getItem('si_schedule_sent'))return;}catch(x){}
-  if(typeof fbq==='function')fbq('track','Schedule');
-  try{sessionStorage.setItem('si_schedule_sent','1');}catch(x){}
-});
+// A booked call: Calendly's embed posts calendly.event_scheduled when the visitor books. Schedule, and
+// BookingConfirmedByVariant for the A/B test, fire here once per booking. The booking's invitee id is kept
+// so the confirm page Calendly may open next does not count the same booking again.
+(function(){
+  function booked(id){
+    var seen=[];
+    try{seen=JSON.parse(localStorage.getItem('si_booked')||'[]');}catch(x){}
+    if(!Array.isArray(seen))seen=[];
+    if(id){if(seen.indexOf(id)>-1)return;}
+    else{try{if(sessionStorage.getItem('si_schedule_sent'))return;}catch(x){}}
+    try{if(id){seen.push(id);localStorage.setItem('si_booked',JSON.stringify(seen.slice(-20)));}}catch(x){}
+    try{sessionStorage.setItem('si_schedule_sent','1');}catch(x){}
+    var v='unknown';try{var m=document.cookie.match(/(?:^|;\s*)ab_variant=(a|b)/i);if(m)v=m[1].toUpperCase();}catch(x){}
+    if(typeof fbq==='function'){
+      fbq('track','Schedule',{},id?{eventID:'schedule_'+id}:undefined);
+      fbq('trackCustom','BookingConfirmedByVariant',{variant:v},id?{eventID:'booking_'+id}:undefined);
+    }
+    try{if(window.va)window.va('event',{name:'booking_confirmed',data:{variant:v}});}catch(x){}
+  }
+  window.addEventListener('message',function(e){
+    if(e.origin!=='https://calendly.com')return;
+    if(!e.data||e.data.event!=='calendly.event_scheduled')return;
+    var uri='';try{uri=e.data.payload.invitee.uri||'';}catch(x){}
+    booked(String(uri).split('/').pop());
+  });
+})();
 </script>
 </body>
 </html>

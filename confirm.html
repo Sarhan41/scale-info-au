@@ -20,14 +20,27 @@ fbq('init', '27661902596830393');
 fbq('init', '7351089301802071');
 fbq('init', '1086131257508450');
 fbq('track', 'PageView');
-(function(){try{if(sessionStorage.getItem('si_schedule_sent'))return;sessionStorage.setItem('si_schedule_sent','1');}catch(x){}fbq('track','Schedule');})();
-(function(){try{var m=document.cookie.match(/(?:^|;\s*)ab_variant=(a|b)/i);var v=m?m[1].toUpperCase():'unknown';fbq('trackCustom','BookingConfirmedByVariant',{variant:v});}catch(e){}})();
+// Calendly opens this page after a booking with the invitee's id in the URL (invitee_uuid). Only that visit is
+// a booked call, and only if the booking page has not already counted it; anyone coming back to this page (a
+// reminder email, a bookmark, a refresh) is not a new booking, so Schedule and BookingConfirmedByVariant stay quiet.
+(function(){
+  var id='';try{id=new URL(location.href).searchParams.get('invitee_uuid')||'';}catch(x){}
+  if(!id)return;
+  var seen=[];try{seen=JSON.parse(localStorage.getItem('si_booked')||'[]');}catch(x){}
+  if(!Array.isArray(seen))seen=[];
+  if(seen.indexOf(id)>-1)return;
+  try{seen.push(id);localStorage.setItem('si_booked',JSON.stringify(seen.slice(-20)));}catch(x){}
+  window.siNewBooking=true;
+  var v='unknown';try{var m=document.cookie.match(/(?:^|;\s*)ab_variant=(a|b)/i);if(m)v=m[1].toUpperCase();}catch(x){}
+  fbq('track','Schedule',{},{eventID:'schedule_'+id});
+  fbq('trackCustom','BookingConfirmedByVariant',{variant:v},{eventID:'booking_'+id});
+})();
 </script>
 <!-- Vercel Analytics -->
 <script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments)};</script>
 <script defer src="/_vercel/insights/script.js"></script>
 <script>
-(function(){try{var m=document.cookie.match(/(?:^|;\s*)ab_variant=(a|b)/i);var v=m?m[1].toUpperCase():'unknown';window.va('event',{name:'booking_confirmed',data:{variant:v}});}catch(e){}})();
+(function(){if(!window.siNewBooking)return;try{var m=document.cookie.match(/(?:^|;\s*)ab_variant=(a|b)/i);var v=m?m[1].toUpperCase():'unknown';window.va('event',{name:'booking_confirmed',data:{variant:v}});}catch(e){}})();
 </script>
 <noscript><img height="1" width="1" style="display:none"
 src="https://www.facebook.com/tr?id=27661902596830393&ev=PageView&noscript=1"/></noscript>
