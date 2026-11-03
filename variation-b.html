@@ -15,12 +15,12 @@ n.queue=[];t=b.createElement(e);t.async=!0;
 t.src=v;s=b.getElementsByTagName(e)[0];
 s.parentNode.insertBefore(t,s)}(window,document,'script',
 'https://connect.facebook.net/en_US/fbevents.js');
-fbq('init', '27661902596830393');
-fbq('init', '7351089301802071');
-fbq('init', '1086131257508450');
-fbq('init', '944436548357804');
-fbq('track', 'PageView');
-fbq('trackCustom', 'VariantView', { variant: 'B' });
+// fbq('init', '27661902596830393'); // old pixel, disabled
+// fbq('init', '7351089301802071'); // old pixel, disabled
+// fbq('init', '1086131257508450'); // old pixel, disabled
+// fbq('init', '944436548357804'); // old pixel, disabled
+if (typeof fbq === 'function') { fbq('init', '1471670847629354'); fbq('track', 'PageView'); }
+if (typeof fbq === 'function') fbq('trackCustom', 'VariantView', { variant: 'B' });
 </script>
 <script>
 (function(){try{if(!/(?:^|;\s*)ab_variant=/i.test(document.cookie)){document.cookie='ab_variant=b; Path=/; Max-Age=2592000; SameSite=Lax';}}catch(e){}})();
@@ -31,12 +31,13 @@ fbq('trackCustom', 'VariantView', { variant: 'B' });
 <script>
 (function(){try{window.va('event',{name:'landing_view',data:{variant:'B'}});}catch(e){}})();
 </script>
-<noscript><img height="1" width="1" style="display:none"
-src="https://www.facebook.com/tr?id=27661902596830393&ev=PageView&noscript=1"/></noscript>
-<noscript><img height="1" width="1" style="display:none"
-src="https://www.facebook.com/tr?id=7351089301802071&ev=PageView&noscript=1"/></noscript>
-<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1086131257508450&ev=PageView&noscript=1"/></noscript>
-<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=944436548357804&ev=PageView&noscript=1"/></noscript>
+<!-- old pixel, disabled: <noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=27661902596830393&ev=PageView&noscript=1"/></noscript> -->
+<!-- old pixel, disabled: <noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=7351089301802071&ev=PageView&noscript=1"/></noscript> -->
+<!-- old pixel, disabled: <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1086131257508450&ev=PageView&noscript=1"/></noscript> -->
+<!-- old pixel, disabled: <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=944436548357804&ev=PageView&noscript=1"/></noscript> -->
+<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1471670847629354&ev=PageView&noscript=1"/></noscript>
 <!-- End Meta Pixel Code -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
