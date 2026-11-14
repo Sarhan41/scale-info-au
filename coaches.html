@@ -52,6 +52,16 @@ src="https://www.facebook.com/tr?id=7351089301802071&ev=PageView&noscript=1"/></
       if(d&&(d.type==='form-submit'||d.type==='form-completed'||d.eventName==='form-submit')){
         _whopLeadFired=true;
         whop.track('lead');
+        // Meta pixel: SubmitApplication — fires once per real application across all initialised pixels.
+        try{
+          var _saRid=(d&&(d.response_id||d.responseId||d.formResponseId))||'';
+          if(!_saRid){try{_saRid=(window.crypto&&crypto.randomUUID)?crypto.randomUUID():('sa-'+Date.now()+'-'+Math.random().toString(36).slice(2));}catch(ex){_saRid='sa-'+Date.now()+'-'+Math.random().toString(36).slice(2);}}
+          var _saSent=false;try{_saSent=(sessionStorage.getItem('_sa_'+_saRid)==='1');}catch(ex){}
+          if(!_saSent&&typeof fbq==='function'){
+            fbq('track','SubmitApplication',{},{eventID:_saRid});
+            try{sessionStorage.setItem('_sa_'+_saRid,'1');}catch(ex){}
+          }
+        }catch(ex){}
         // Build redirect to /coaches-book with UTMs preserved
         var qs='';
         ['utm_source','utm_medium','utm_campaign','utm_content','utm_term','wclid'].forEach(function(k){
