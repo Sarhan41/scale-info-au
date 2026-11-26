@@ -32,6 +32,7 @@ if (typeof fbq === 'function') { fbq('init', '1471670847629354'); fbq('init', '9
   if(seen.indexOf(id)>-1)return;
   try{seen.push(id);localStorage.setItem('si_booked',JSON.stringify(seen.slice(-20)));}catch(x){}
   window.siNewBooking=true;
+  try{var _vm=document.cookie.match(/(?:^|;\s*)vsl_variant=(old|new)/i);if(_vm)navigator.sendBeacon('/api/track?e=booking&v='+_vm[1].toLowerCase());}catch(x){}
   var v='unknown';try{var m=document.cookie.match(/(?:^|;\s*)ab_variant=(a|b)/i);if(m)v=m[1].toUpperCase();}catch(x){}
   if(typeof fbq==='function'){
     fbq('track','Schedule',{},{eventID:'schedule_'+id});

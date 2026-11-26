@@ -344,6 +344,7 @@ body {
     else{try{if(sessionStorage.getItem('si_schedule_sent'))return;}catch(x){}}
     try{if(id){seen.push(id);localStorage.setItem('si_booked',JSON.stringify(seen.slice(-20)));}}catch(x){}
     try{sessionStorage.setItem('si_schedule_sent','1');}catch(x){}
+    try{var _vm=document.cookie.match(/(?:^|;\s*)vsl_variant=(old|new)/i);if(_vm)navigator.sendBeacon('/api/track?e=booking&v='+_vm[1].toLowerCase());}catch(x){}
     var v='unknown';try{var m=document.cookie.match(/(?:^|;\s*)ab_variant=(a|b)/i);if(m)v=m[1].toUpperCase();}catch(x){}
     if(typeof fbq==='function'){
       fbq('track','Schedule',{},id?{eventID:'schedule_'+id}:undefined);

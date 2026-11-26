@@ -30,6 +30,7 @@ if (typeof fbq === 'function') fbq('trackCustom', 'VariantView', { variant: 'A' 
 <script defer src="/_vercel/insights/script.js"></script>
 <script>
 (function(){try{window.va('event',{name:'landing_view',data:{variant:'A'}});}catch(e){}})();
+(function(){try{navigator.sendBeacon('/api/track?e=view&v=old');}catch(e){}})();
 </script>
 <!-- old pixel, disabled: <noscript><img height="1" width="1" style="display:none"
 src="https://www.facebook.com/tr?id=27661902596830393&ev=PageView&noscript=1"/></noscript> -->
@@ -52,6 +53,7 @@ src="https://www.facebook.com/tr?id=7351089301802071&ev=PageView&noscript=1"/></
       if(d&&(d.type==='form-submit'||d.type==='form-completed'||d.eventName==='form-submit')){
         _whopLeadFired=true;
         whop.track('lead');
+        try{navigator.sendBeacon('/api/track?e=lead&v=old');}catch(ex){}
         // Meta pixel: SubmitApplication — fires once per real application across all initialised pixels.
         try{
           var _saRid=(d&&(d.response_id||d.responseId||d.formResponseId))||'';
