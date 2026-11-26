@@ -20,7 +20,7 @@ fbq('init', '27661902596830393');
 fbq('init', '7351089301802071');
 fbq('init', '1086131257508450');
 fbq('init', '944436548357804');
-if (typeof fbq === 'function') { fbq('init', '1471670847629354'); fbq('init', '986889080523504'); fbq('init', '1637717814480252'); fbq('track', 'PageView'); }
+if (typeof fbq === 'function') { fbq('init', '1471670847629354'); fbq('init', '986889080523504'); fbq('init', '1637717814480252'); fbq('init', '2115639282421377'); fbq('track', 'PageView'); }
 // Calendly opens this page after a booking with the invitee's id in the URL (invitee_uuid). Only that visit is
 // a booked call, and only if the booking page has not already counted it; anyone coming back to this page (a
 // reminder email, a bookmark, a refresh) is not a new booking, so Schedule and BookingConfirmedByVariant stay quiet.
@@ -32,6 +32,7 @@ if (typeof fbq === 'function') { fbq('init', '1471670847629354'); fbq('init', '9
   if(seen.indexOf(id)>-1)return;
   try{seen.push(id);localStorage.setItem('si_booked',JSON.stringify(seen.slice(-20)));}catch(x){}
   window.siNewBooking=true;
+  try{var _vm=document.cookie.match(/(?:^|;\s*)vsl_variant=(old|new)/i);if(_vm)navigator.sendBeacon('/api/track?e=booking&v='+_vm[1].toLowerCase());}catch(x){}
   var v='unknown';try{var m=document.cookie.match(/(?:^|;\s*)ab_variant=(a|b)/i);if(m)v=m[1].toUpperCase();}catch(x){}
   if(typeof fbq==='function'){
     fbq('track','Schedule',{},{eventID:'schedule_'+id});
